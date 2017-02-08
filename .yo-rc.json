@@ -1,0 +1,13 @@
+{
+  "generator-racket": {
+    "generatorVersion": "1.6.0",
+    "appName": "evandTest",
+    "filters": {
+      "sass": true,
+      "reduxSaga": true,
+      "reduxThunk": false,
+      "bootstrap": false,
+      "reduxForm": true
+    }
+  }
+}
