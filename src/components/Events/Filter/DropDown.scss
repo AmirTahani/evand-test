@@ -1,0 +1,27 @@
+:local(.container) {
+  width: 160px;
+  margin: 10px;
+  float: right;
+
+
+  .title {
+    background-color: #bdbdbd;
+    border: 1px solid black;
+    text-align: center;
+  }
+
+  .option {
+    width: 160px;
+    height: 30px;
+    background-color: #bdbdbd;
+    display: block;
+    text-align: center;
+
+    &.selected {
+      background-color: #e3f4db;
+    }
+  }
+  .option:hover {
+    background-color: #1caff6;
+  }
+}

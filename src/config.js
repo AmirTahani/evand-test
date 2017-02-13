@@ -2,7 +2,7 @@ import path from 'path';
 export const port = process.env.PORT || 3000;
 export const staticPath = path.resolve(__dirname, '..', 'static');
 export const rootDir = path.resolve(__dirname, '..');
-export const apiPath = 'https://api.github.com'; // We use github api for example
+export const apiPath = 'https://api.evand.com'; // We use github api for example
 
 export const head = {
   titleTemplate: 'Racket: %s',

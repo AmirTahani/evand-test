@@ -1,0 +1,18 @@
+:local(.container) {
+  .pagination {
+    font-weight: 600;
+    font-size: 18px;
+    color:  blue;
+
+    &.pagination-next {
+      float: right;
+      margin-right: 30px;
+    }
+
+    &.pagination-prev {
+      float: left;
+      margin-left: 30px;
+    }
+  }
+
+}

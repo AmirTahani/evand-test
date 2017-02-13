@@ -1,0 +1,35 @@
+:local(.container) {
+  border: 1px solid #bdbdbd;
+  min-width: 340px;
+  max-width: 340px;
+  height: 225px;
+  margin: 15px;
+  float: left;
+
+  .card-image {
+    display: block;
+    margin: 0px auto 10px auto;
+    width: 100%;
+    border-bottom: 1px solid #1caff6;
+  }
+  .card-title {
+    text-align: center;
+    font-weight: 400;
+    direction: rtl;
+  }
+  .card-price {
+    text-align: center;
+    display: block;
+    margin: auto;
+  }
+  .card-city {
+    text-align: center;
+    display: block;
+    margin: auto;
+  }
+  .card-date {
+    text-align: center;
+    display: block;
+    margin: auto;
+  }
+}
