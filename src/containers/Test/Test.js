@@ -21,12 +21,19 @@ import styles from './Test.scss';
   meta: state.events.meta,
   error: state.events.error,
   categories: state.categories.categories,
+  loadingCategories: state.categories.loadingCategories,
+  loadedCategories: state.categories.loadedCategories,
+  loadedProvinces: state.provinces.loadedProvinces,
+  loadingProvinces: state.provinces.loadingProvinces,
   provinces: state.provinces.provinces,
+
 }), {load, push, loadCategories, loadProvinces})
 export default class Test extends Component {
   url;
   nextUrl = null;
   prevUrl = null;
+  provinces = [];
+  categories = [];
 
   componentWillMount() {
     this.url = new Url();
@@ -92,9 +99,36 @@ export default class Test extends Component {
 
 
   render() {
-    const {data, loaded, loading, location} = this.props;
+    const {
+      data,
+      loaded,
+      loading,
+      location,
+      provinces,
+      categories,
+      loadedCategories,
+      loadingCategories,
+      loadedProvinces,
+      loadingProvinces
+    } = this.props;
     const onlineSwitchChecked = location.query['online'] === 'yes' ? true : false;
     this.generatePaginationUrl();
+    if ((!loadingCategories && !loadingProvinces) && (loadedCategories && loadedProvinces)) {
+      this.provinces = {
+        ...provinces,
+        name: 'cities',
+        label: 'choose Your City',
+        optionValue: option => option.slug,
+        optionLabel: option => option.name,
+      };
+      this.categories = {
+        ...categories,
+        name: 'categories',
+        label: 'choose Your Category',
+        optionLabel: option => option.title,
+        optionValue: option => option.slug
+      }
+    }
     return (
       <div className={styles.container}>
         {
@@ -102,8 +136,8 @@ export default class Test extends Component {
             <div>
               <div className="filters">
                 <Search onChange={this.handleSearch.bind(this)} value={this.url.duplicate().getQuery()['q'] }/>
-                {/*<DropDown data={cities} url={this.url} location={location}/>*/}
-                {/*<DropDown data={categories} url={this.url} location={location}/>*/}
+                <DropDown data={this.provinces} url={this.url} location={location}/>
+                <DropDown data={this.categories} url={this.url} location={location}/>
                 <Switch label="online" checked={onlineSwitchChecked} onChange={this.handleSwitch.bind(this)}/>
                 <button className="clear-filter" onClick={this.handleClearFilter.bind(this)}>Clear Filters</button>
               </div>

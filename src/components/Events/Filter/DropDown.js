@@ -10,7 +10,7 @@ export default class DropDown extends Component {
 
   renderOptions = data => {
     return (
-      data.options.map((item, key) => {
+      data.data.map((item, key) => {
         const queryString = this.props.url.duplicate().toggleArray(data.name, data.optionValue(item)).getQueryString();
         const queryParam = this.props.url.duplicate().getQuery()[data.name];
         const selected = queryParam.includes(data.optionValue(item));

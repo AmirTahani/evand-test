@@ -45,5 +45,5 @@ export function loadSuccess(data) {
 
 export function* loadSaga(client) {
   const response = yield client.get('provinces');
-  yield put(loadSuccess(response.data));
+  yield put(loadSuccess(response));
 }
