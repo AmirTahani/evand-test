@@ -12,7 +12,7 @@ export default class Switch extends Component {
     return (
       <div className={styles.container}>
         <label>{label}</label>
-        <input type="checkbox" defaultChecked={checked} ref='checkBox' onChange={this.handleChange.bind(this)}/>
+        <input type="checkbox" checked={checked} ref='checkBox' onChange={this.handleChange.bind(this)}/>
       </div>
     );
 

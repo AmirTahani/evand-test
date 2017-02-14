@@ -8,19 +8,20 @@ export default class DropDown extends Component {
     param: []
   }
 
-  renderOptions = data => {
+  renderOptions = options => {
     return (
-      data.data.map((item, key) => {
-        const queryString = this.props.url.duplicate().toggleArray(data.name, data.optionValue(item)).getQueryString();
-        const queryParam = this.props.url.duplicate().getQuery()[data.name];
-        const selected = queryParam.includes(data.optionValue(item));
+      options.data.map((item, key) => {
+        const queryString = this.props.url.duplicate().toggleArray(options.name, options.optionValue(item)).getQueryString();
+        const queryParam = this.props.url.duplicate().getQuery()[options.name];
+        const selected = queryParam.includes(options.optionValue(item));
+
         return <Link
           className={`option ${selected ? 'selected' : ''}`}
           key={key}
-          value={data.optionValue(item)}
           to={`${this.props.location.pathname}?${queryString}`}
+          onClick={this.handleClick.bind(this)}
         >
-          {data.optionLabel(item)}
+          {options.optionLabel(item)}
         </Link>
       })
     )
@@ -41,7 +42,7 @@ export default class DropDown extends Component {
           className="title"
           onClick={this.handleClick.bind(this)}
         >
-          {queryParam.length !== 0 ? queryParam.join(',') : data.label}
+          {queryParam && queryParam.length !== 0 ? queryParam.join(',') : data.label}
         </div>
         {
           this.state.show ? <div>

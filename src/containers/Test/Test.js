@@ -29,15 +29,13 @@ import styles from './Test.scss';
 
 }), {load, push, loadCategories, loadProvinces})
 export default class Test extends Component {
-  url;
+  url = new Url();
   nextUrl = null;
   prevUrl = null;
   provinces = [];
   categories = [];
 
-  componentWillMount() {
-    this.url = new Url();
-    this.url.setPath('events');
+  componentDidMount() {
     this.url.setQuery(this.props.location.query);
     this.props.load(this.url.getQueryString());
     this.props.loadProvinces();
@@ -45,12 +43,13 @@ export default class Test extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const {query, pathname} = nextProps.location;
-    if (nextProps.location.query !== this.props.location.query) {
-      if (query['cities'] && query['cities'] !== this.props.location.query['cities']) {
-        this.props.push(`${pathname}?${this.url.setQuery(nextProps.location.query).unSet('online').getQueryString()}`);
-      } else {
-        this.props.load(this.url.setQuery(nextProps.location.query).getQueryString());
+    const nextQuery = nextProps.location.query;
+    const currentQuery = this.props.location.query;
+    if (nextQuery !== currentQuery) {
+      if(nextQuery['cities'] && nextQuery['cities'] !== currentQuery['cities']) {
+        this.props.push(`${this.props.location.pathname}?${this.url.duplicate().setQuery(nextQuery).unSet('online').getQueryString()}`);
+      }else {
+        this.props.load(this.url.setQuery(nextQuery).duplicate().getQueryString());
       }
     }
   }
@@ -88,11 +87,11 @@ export default class Test extends Component {
   handleSwitch(value) {
     const {pathname} = this.props.location
     if (value) {
-      const queryString = this.url.unSet('cities').set('online', 'yes').getQueryString();
+      const queryString = this.url.duplicate().setOnline('yes').getQueryString();
       this.props.push(`${pathname}?${queryString}`);
     }
     else {
-      const queryString = this.url.unSet('online').getQueryString();
+      const queryString = this.url.duplicate().setOnline('no').getQueryString();
       this.props.push(`${pathname}?${queryString}`);
     }
   }
@@ -111,8 +110,11 @@ export default class Test extends Component {
       loadedProvinces,
       loadingProvinces
     } = this.props;
-    const onlineSwitchChecked = location.query['online'] === 'yes' ? true : false;
+
+    const onlineSwitchChecked = location.query['online'] === 'yes';
+
     this.generatePaginationUrl();
+
     if ((!loadingCategories && !loadingProvinces) && (loadedCategories && loadedProvinces)) {
       this.provinces = {
         ...provinces,
@@ -129,13 +131,14 @@ export default class Test extends Component {
         optionValue: option => option.slug
       }
     }
+
     return (
       <div className={styles.container}>
         {
           (!loaded && loading) ? <Spinner/> :
             <div>
               <div className="filters">
-                <Search onChange={this.handleSearch.bind(this)} value={this.url.duplicate().getQuery()['q'] }/>
+                <Search onChange={this.handleSearch.bind(this)} value={this.url.duplicate().getQuery()['q']}/>
                 <DropDown data={this.provinces} url={this.url} location={location}/>
                 <DropDown data={this.categories} url={this.url} location={location}/>
                 <Switch label="online" checked={onlineSwitchChecked} onChange={this.handleSwitch.bind(this)}/>

@@ -39,6 +39,17 @@ export default class Url {
     return this;
   }
 
+  setOnline(value) {
+   if(value === 'yes') {
+     this.unSet('cities');
+     this.query['online'] = value;
+   }
+   else {
+     this.unSet('online');
+   }
+   return this;
+  }
+
   toggleArray(key, value) {
     if (this.query[key]) {
       if (this.query[key].includes(value)) {
