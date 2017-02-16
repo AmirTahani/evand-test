@@ -2,12 +2,17 @@
   width: 160px;
   margin: 10px;
   float: right;
-
+  position: relative;
 
   .title {
     background-color: #bdbdbd;
     border: 1px solid black;
     text-align: center;
+  }
+
+  .options {
+    position: absolute;
+
   }
 
   .option {

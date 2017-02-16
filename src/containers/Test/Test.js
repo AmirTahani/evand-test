@@ -46,9 +46,9 @@ export default class Test extends Component {
     const nextQuery = nextProps.location.query;
     const currentQuery = this.props.location.query;
     if (nextQuery !== currentQuery) {
-      if(nextQuery['cities'] && nextQuery['cities'] !== currentQuery['cities']) {
+      if (nextQuery['cities'] && nextQuery['cities'] !== currentQuery['cities']) {
         this.props.push(`${this.props.location.pathname}?${this.url.duplicate().setQuery(nextQuery).unSet('online').getQueryString()}`);
-      }else {
+      } else {
         this.props.load(this.url.setQuery(nextQuery).duplicate().getQueryString());
       }
     }
@@ -112,6 +112,7 @@ export default class Test extends Component {
     } = this.props;
 
     const onlineSwitchChecked = location.query['online'] === 'yes';
+    console.log(this.props);
 
     this.generatePaginationUrl();
 
@@ -144,20 +145,21 @@ export default class Test extends Component {
                 <Switch label="online" checked={onlineSwitchChecked} onChange={this.handleSwitch.bind(this)}/>
                 <button className="clear-filter" onClick={this.handleClearFilter.bind(this)}>Clear Filters</button>
               </div>
-              {
-                data.map((item, key) => {
-                  return <Card
-                    src={(item.cover && item.cover.original) ? item.cover.original : null}
-                    title={item.name}
-                    key={key}
-                  />
-                })
-              }
-              <Pagination
-                next={this.nextUrl}
-                prev={this.prevUrl}
-              />
-
+              <div className={`event-cards${loading ? '-loading' : ''}`}>
+                {
+                  data.map((item, key) => {
+                    return <Card
+                      src={(item.cover && item.cover.original) ? item.cover.original : null}
+                      title={item.name}
+                      key={key}
+                    />
+                  })
+                }
+                <Pagination
+                  next={this.nextUrl}
+                  prev={this.prevUrl}
+                />
+              </div>
             </div>
         }
 

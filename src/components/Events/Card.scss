@@ -5,6 +5,8 @@
   height: 225px;
   margin: 15px;
   float: left;
+  display: inline-block;
+  overflow: hidden;
 
   .card-image {
     display: block;
